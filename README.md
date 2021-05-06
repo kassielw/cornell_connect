@@ -28,8 +28,13 @@ Insert screenshots of our app and other feature highlights here.
 
 ## Team
 
--   Name 1 – [netid](netid@cornell.edu)
--   Name 2 – [netid](netid@cornell.edu)
--   Name 3 – [netid](netid@cornell.edu)
--   Name 4 – [netid](netid@cornell.edu)
--   Name 5 – [netid](netid@cornell.edu)
+### iOS
+
+-   Varsha Iyer – [vvi2](vvi2@cornell.edu)
+-   Janice Lee – [jl2838](jl2838@cornell.edu)
+
+### Backend
+
+-   Hannah Lee – [hel33](hel33@cornell.edu)
+-   Zachary Thurston – [zwt3](zwt3@cornell.edu)
+-   Kassie Wang – [klw242](klw242@cornell.edu)
