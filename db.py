@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+CATEGORIES = ["Studying", "Food", "Fitness", "Hotspots", "Dorms"]
 
 # class Category(db.Model):
 #     __tablename__ = "category"
@@ -23,13 +24,13 @@ class Attraction(db.Model):
     address = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
     posts = db.relationship("Post", cascade="delete")
-    # category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
+    category = db.Column(db.String, nullable=False)
 
     def __init__(self, **kwargs):
         self.name = kwargs.get("name")
         self.address = kwargs.get("address")
         self.description = kwargs.get("description")
-        # self.category_id = kwargs.get("category_id")
+        self.category = kwargs.get("category")
 
     def serialize(self):
         return {
@@ -37,6 +38,7 @@ class Attraction(db.Model):
             "name": self.name,
             "address": self.address,
             "description": self.description,
+            "category": self.category,
             "posts": [p.serialize() for p in self.posts]
         }
 

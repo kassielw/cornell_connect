@@ -2,7 +2,7 @@ import json
 import os
 
 from db import db
-from db import Attraction, Post, Comment
+from db import Attraction, Post, Comment, CATEGORIES
 from flask import Flask
 from flask import request
 
@@ -31,13 +31,6 @@ def failure_response(message, code=404):
 # def get_categories():
 #     return success_response([c.serialize() for c in Category.query.all()])
 
-# retrieve a category
-# @app.route("/categories/<int:category_id>/")
-# def get_category(category_id):
-#     category = Category.query.filter_by(id=category_id).first()
-#     if not category:
-#         return failure_response("Category not found")
-#     return success_response(category.serialize())
 
 # retrieve all attractions
 @app.route("/attractions/")
@@ -66,9 +59,12 @@ def create_attraction():
     # category = Category.query.filter_by(id=category_id).first()
     # if not category:
     #     return failure_response("Category not found")
+    category=body.get("category")
+    if category not in CATEGORIES:
+        return failure_response("Category not found")
     new_attraction = Attraction(name=body.get("name"), address=body.get(
-          "address"), description=body.get("description"))
-    if not new_attraction.name or not new_attraction.address or not new_attraction.description:
+          "address"), description=body.get("description"), category=body.get("category"))
+    if not new_attraction.name or not new_attraction.address or not new_attraction.description or not new_attraction.category:
         return failure_response("Missing required field")
     db.session.add(new_attraction)
     db.session.commit()
