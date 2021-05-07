@@ -4,19 +4,6 @@ db = SQLAlchemy()
 
 CATEGORIES = ["Studying", "Food", "Fitness", "Hotspots", "Dorms"]
 
-# class Category(db.Model):
-#     __tablename__ = "category"
-#     id = db.Column(db.Integer, primary_key=True)
-#     category = db.Column(db.String, nullable=False)
-#     attractions = db.relationship("Attraction", cascade="delete")
-
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "category": self.category,
-#             "attractions": [a.serialize() for a in self.attractions]
-#         }
-
 class Attraction(db.Model):
     __tablename__ = "attraction"
     id = db.Column(db.Integer, primary_key=True)
