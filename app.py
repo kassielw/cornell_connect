@@ -97,15 +97,57 @@ def create_post(a_id):
 
 # ZACH TODO: edit post (ensure that user netid is same as previous)
 @app.route("/posts/edit/<int:id>/", methods=["POST"])
+def edit_post(p_id):
+    body = json.loads(request.data)
+    netid = body.get("netid")
+    post_to_edit = Post.query.filter_by(id = p_id).first()
+    if netid is None or post_to_edit.netid is not netid:
+        return failure_response("NetID issue")
+    new_content = body.get("description")
+    if new_content is None:
+        return failure_response("Missing field")
+    post_to_edit.description = new_content
+    db.session.commit()
+    return success_response(post_to_edit.serialize(), 201)
 
 # ZACH TODO: retrieve all comments for a given post
 @app.route("/comments/<int:p_id>/")
-
+def retrieve_comments(p_id):
+    post = Post.query.filter_by(id = p_id).first()
+    comments_on_post = post.comments
+    return success_response([comment.serialize() for comment in comments_on_post])
+    
 # ZACH TODO: create comment (add comment to post)
 @app.route("/comments/<int:p_id>/", methods=["POST"])
+def create_comment(p_id):
+    post = Post.query.filter_by(id = p_id).first()
+    if post is None:
+        return failure_response('Post not found')
+    body = json.loads(request.data)
+    name = body.get('name')
+    description = body.get('description')
+    if body is None or name is None:
+        return failure_response('Missing field')
+    new_comment = Comment(netid = body.get("netid"), name = name, description = description)
+    post.comments.append(new_comment)
+    db.session.add(new_comment)
+    db.session.commit()
+    return success_response(new_comment.serialize())
 
 # ZACH TODO: edit comment (ensure that user netid is same as previous)
 @app.route("/comments/edit/<int:id>/", methods=["POST"])
+def edit_comment(c_id):
+    body = json.loads(request.data)
+    netid = body.get("netid")
+    comment_to_edit = Comment.query.filter_by(id = c_id).first()
+    if netid is None or comment_to_edit.netid is not netid:
+        return failure_response("NetID issue")
+    new_content = body.get("description")
+    if new_content is None:
+        return failure_response("Missing field")
+    comment_to_edit.description = new_content
+    db.session.commit()
+    return success_response(comment_to_edit.serialize(), 201)
 
 # notifcation system (reach goal): given netid, retrieve posts and comments
 # @app.route("/posts/<int:a_id>/")
