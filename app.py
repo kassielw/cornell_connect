@@ -25,6 +25,15 @@ def success_response(data, code=200):
 def failure_response(message, code=404):
     return json.dumps({"success": False, "error": message}), code
 
+# retrieve all categories
+@app.route("/categories/")
+def get_categories():
+    return success_response(CATEGORIES)
+
+# retrieve a category
+@app.route("/categories/<int:c_id>/")
+def get_category(c_id):
+    return success_response([a.serialize() for a in Attraction.query.filter_by(category_id=c_id).all()]) 
 
 # retrieve all attractions
 @app.route("/attractions/")
@@ -98,24 +107,15 @@ def create_post(attraction_id):
     db.session.commit()
     return success_response(new_post.serialize(), 201)
 
-# edit post (ensure that user netid is same as previous)
-@app.route("/posts/edit/<int:post_id>/", methods=["POST"])
-def edit_post(post_id):
-    post_to_edit = Post.query.filter_by(id=post_id).first()
-    if not post_to_edit:
-        return failure_response("Post not found")
-    body = json.loads(request.data)
-    netid = body.get("netid")
-    if not netid or post_to_edit.netid != netid:
-        return failure_response("NetID missing or incorrect")
-    new_content = body.get("description")
-    if not new_content:
-        return failure_response("Missing required field")
-    post_to_edit.description = new_content
-    db.session.commit()
-    return success_response(post_to_edit.serialize(), 201)
-
 # delete post
+@app.route("/posts/edit/<int:post_id>/", methods=["DELETE"])
+def delete_post(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    if not post:
+        return failure_response("Post not found")
+    db.session.delete(post)
+    db.session.commit()
+    return success_response(post.serialize())
 
 # retrieve all comments for a given post
 @app.route("/comments/<int:post_id>/")
@@ -130,7 +130,7 @@ def retrieve_comments(post_id):
 @app.route("/comments/<int:post_id>/", methods=["POST"])
 def create_comment(post_id):
     post = Post.query.filter_by(id=post_id).first()
-    if post is None:
+    if not post:
         return failure_response('Post not found')
     body = json.loads(request.data)
     netid = body.get('netid')
@@ -144,24 +144,16 @@ def create_comment(post_id):
     db.session.commit()
     return success_response(new_comment.serialize())
 
-# edit comment (ensure that user netid is same as previous)
-@app.route("/comments/edit/<int:id>/", methods=["POST"])
-def edit_comment(id):
-    body = json.loads(request.data)
-    netid = body.get("netid")
-    comment_to_edit = Comment.query.filter_by(id=id).first()
-    if not comment_to_edit:
-        return failure_response("Comment not found")
-    if not netid or comment_to_edit.netid != netid:
-        return failure_response("NetID missing or incorrect")
-    new_content = body.get("description")
-    if not new_content:
-        return failure_response("Missing required field")
-    comment_to_edit.description = new_content
-    db.session.commit()
-    return success_response(comment_to_edit.serialize(), 201)
-
 # delete comment
+@app.route("/comments/<int:comment_id>/", methods=["DELETE"])
+def del_comment(comment_id):
+    comment = Comment.query.filter_by(id = comment_id).first()
+    if comment is None:
+        return failure_response("Comment not found")
+    db.session.delete(comment)
+    db.session.commit()
+    return success_response(comment.serialize())
+
 
 # notifcation system (reach goal): given netid, retrieve posts and comments
 

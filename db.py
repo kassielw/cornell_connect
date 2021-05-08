@@ -1,8 +1,40 @@
+import base64
+import boto3
+import datetime
 from flask_sqlalchemy import SQLAlchemy
+from io import BytesIO
+from mimetypes import guess_extension, guess_type
+import os
+from PIL import Image
+import random
+import re
+import string
 
 db = SQLAlchemy()
 
 CATEGORIES = ["Studying", "Food", "Fitness", "Hotspots", "Dorms"]
+
+EXTENSIONS = ["png", "gif", "jpg", "jpeg"]
+BASE_DIR = os.getcwd()
+S3_BUCKET = "//"
+S3_BASE_URL =f'https://{S3_BUCKET}.s3-<REGION>.amazonaws.com'
+
+class Asset(db.Model):
+    __tablename__ = "asset"
+    id = db.Column(db.Integer, primary_key=True)
+    base_url = db.Column(db.String, nullable=False)
+    salt = db.Column(db.String, nullable=False)
+    extension = db.Column(db.String, nullable=False)
+    height = db.Column(db.Integer, nullable=False)
+    width = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, **kwargs):
+        self.create(kwargs.get("image_data"))
+    
+    def serialize(self):
+        return {
+            "url": f"{self.base_url}/{self.salt}.{self.extension}"
+        }
 
 class Attraction(db.Model):
     __tablename__ = "attraction"
