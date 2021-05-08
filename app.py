@@ -70,7 +70,7 @@ def get_posts(attraction_id):
     attraction = Attraction.query.filter_by(id=attraction_id).first()
     if not attraction:
         return failure_response("Attraction not found")
-    posts = Post.query.filter_by(id=attraction_id).all()
+    posts = Post.query.filter_by(attraction_id=attraction_id).all()
     if not posts:
         return failure_response("Posts not found")
     return success_response([p.serialize() for p in posts], 201)
@@ -101,13 +101,15 @@ def create_post(attraction_id):
 # edit post (ensure that user netid is same as previous)
 @app.route("/posts/edit/<int:post_id>/", methods=["POST"])
 def edit_post(post_id):
+    post_to_edit = Post.query.filter_by(id=post_id).first()
+    if not post_to_edit:
+        return failure_response("Post not found")
     body = json.loads(request.data)
     netid = body.get("netid")
-    post_to_edit = Post.query.filter_by(id=post_id).first()
-    if netid is None or post_to_edit.netid is not netid:
+    if not netid or post_to_edit.netid != netid:
         return failure_response("NetID missing or incorrect")
     new_content = body.get("description")
-    if new_content is None:
+    if not new_content:
         return failure_response("Missing required field")
     post_to_edit.description = new_content
     db.session.commit()
@@ -131,11 +133,12 @@ def create_comment(post_id):
     if post is None:
         return failure_response('Post not found')
     body = json.loads(request.data)
+    netid = body.get('netid')
     name = body.get('name')
     description = body.get('description')
-    if body is None or name is None:
+    if not netid or not description:
         return failure_response('Missing required field')
-    new_comment = Comment(netid=body.get("netid"), name=name, description=description, post_id=post_id)
+    new_comment = Comment(netid=netid, name=name, description=description, post_id=post_id)
     post.comments.append(new_comment)
     db.session.add(new_comment)
     db.session.commit()
@@ -147,10 +150,12 @@ def edit_comment(id):
     body = json.loads(request.data)
     netid = body.get("netid")
     comment_to_edit = Comment.query.filter_by(id=id).first()
-    if netid is None or comment_to_edit.netid is not netid:
-        return failure_response("NetID issue")
+    if not comment_to_edit:
+        return failure_response("Comment not found")
+    if not netid or comment_to_edit.netid != netid:
+        return failure_response("NetID missing or incorrect")
     new_content = body.get("description")
-    if new_content is None:
+    if not new_content:
         return failure_response("Missing required field")
     comment_to_edit.description = new_content
     db.session.commit()
