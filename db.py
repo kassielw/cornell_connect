@@ -35,6 +35,17 @@ class Asset(db.Model):
         return {
             "url": f"{self.base_url}/{self.salt}.{self.extension}"
         }
+    
+    def create(self, image_data):
+        try:
+            ext = guess_extension(guess_type(image_data)[0])[1:]
+            if ext not in EXTENSIONS:
+                raise Exception(f'Extension {ext} not supported')
+            
+            salt = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for i in range(16))
+
+            img_str = re.sub("^data:image/.+;base64,", "", image_data)
+
 
 class Attraction(db.Model):
     __tablename__ = "attraction"

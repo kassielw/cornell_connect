@@ -35,9 +35,22 @@ def get_categories():
 def get_category(c_id):
     return success_response([a.serialize() for a in Attraction.query.filter_by(category_id=c_id).all()]) 
 
+# retrieve all categories
+# @app.route("/categories/")
+# def get_categories():
+#     return success_response([c.serialize() for c in Category.query.all()])
+
+
 # retrieve all attractions
 @app.route("/attractions/")
 def get_attractions():
+    # category = Category.query.filter_by(id=category_id).first()
+    # if not category:
+    #     return failure_response("Category not found")
+    # attractions = Attraction.query.filter_by(id=category_id).all()
+    # if not attractions:
+    #     return failure_response("Attractions not found")
+    # return success_response([a.serialize() for a in attractions], 201)
     return success_response([a.serialize() for a in Attraction.query.all()])
 
 # retrieve an attraction
@@ -52,6 +65,9 @@ def get_attraction(attraction_id):
 @app.route("/attractions/", methods=["POST"])
 def create_attraction():
     body = json.loads(request.data)
+    # category = Category.query.filter_by(id=category_id).first()
+    # if not category:
+    #     return failure_response("Category not found")
     category=body.get("category")
     if category not in CATEGORIES:
         return failure_response("Category not found")
@@ -79,7 +95,7 @@ def get_posts(attraction_id):
     attraction = Attraction.query.filter_by(id=attraction_id).first()
     if not attraction:
         return failure_response("Attraction not found")
-    posts = Post.query.filter_by(attraction_id=attraction_id).all()
+    posts = Post.query.filter_by(id=attraction_id).all()
     if not posts:
         return failure_response("Posts not found")
     return success_response([p.serialize() for p in posts], 201)
@@ -133,12 +149,11 @@ def create_comment(post_id):
     if not post:
         return failure_response('Post not found')
     body = json.loads(request.data)
-    netid = body.get('netid')
     name = body.get('name')
     description = body.get('description')
-    if not netid or not description:
-        return failure_response('Missing required field')
-    new_comment = Comment(netid=netid, name=name, description=description, post_id=post_id)
+    if body is None or name is None:
+        return failure_response('Missing field')
+    new_comment = Comment(netid = body.get("netid"), name = name, description = description)
     post.comments.append(new_comment)
     db.session.add(new_comment)
     db.session.commit()
@@ -154,9 +169,8 @@ def del_comment(comment_id):
     db.session.commit()
     return success_response(comment.serialize())
 
-
 # notifcation system (reach goal): given netid, retrieve posts and comments
-
+# @app.route("/posts/<int:a_id>/")
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
     # port = int(os.environ.get("PORT", 5000))
