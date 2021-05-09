@@ -2,7 +2,7 @@ import json
 import os
 
 from db import db
-from db import Attraction, Post, Comment, CATEGORIES
+from db import Asset, Attraction, Post, Comment, CATEGORIES
 from flask import Flask
 from flask import request
 
@@ -35,22 +35,9 @@ def get_categories():
 def get_category(c_id):
     return success_response([a.serialize() for a in Attraction.query.filter_by(category_id=c_id).all()]) 
 
-# retrieve all categories
-# @app.route("/categories/")
-# def get_categories():
-#     return success_response([c.serialize() for c in Category.query.all()])
-
-
 # retrieve all attractions
 @app.route("/attractions/")
 def get_attractions():
-    # category = Category.query.filter_by(id=category_id).first()
-    # if not category:
-    #     return failure_response("Category not found")
-    # attractions = Attraction.query.filter_by(id=category_id).all()
-    # if not attractions:
-    #     return failure_response("Attractions not found")
-    # return success_response([a.serialize() for a in attractions], 201)
     return success_response([a.serialize() for a in Attraction.query.all()])
 
 # retrieve an attraction
@@ -65,9 +52,6 @@ def get_attraction(attraction_id):
 @app.route("/attractions/", methods=["POST"])
 def create_attraction():
     body = json.loads(request.data)
-    # category = Category.query.filter_by(id=category_id).first()
-    # if not category:
-    #     return failure_response("Category not found")
     category=body.get("category")
     if category not in CATEGORIES:
         return failure_response("Category not found")
@@ -98,7 +82,7 @@ def get_posts(attraction_id):
     posts = Post.query.filter_by(id=attraction_id).all()
     if not posts:
         return failure_response("Posts not found")
-    return success_response([p.serialize() for p in posts], 201)
+    return success_response([p.serialize() for p in posts])
 
 # retrieve a post
 @app.route("/posts/<int:post_id>/")
@@ -151,26 +135,38 @@ def create_comment(post_id):
     body = json.loads(request.data)
     name = body.get('name')
     description = body.get('description')
-    if body is None or name is None:
-        return failure_response('Missing field')
+    if not body:
+        return failure_response('Missing required field')
     new_comment = Comment(netid = body.get("netid"), name = name, description = description)
     post.comments.append(new_comment)
     db.session.add(new_comment)
     db.session.commit()
-    return success_response(new_comment.serialize())
+    return success_response(new_comment.serialize(), 201)
 
 # delete comment
 @app.route("/comments/<int:comment_id>/", methods=["DELETE"])
-def del_comment(comment_id):
+def delete_comment(comment_id):
     comment = Comment.query.filter_by(id = comment_id).first()
-    if comment is None:
+    if not comment:
         return failure_response("Comment not found")
     db.session.delete(comment)
     db.session.commit()
     return success_response(comment.serialize())
 
+# upload picture
+@app.route("/upload/", methods=["POST"])
+def upload():
+    body = json.loads(request.data)
+    image_data = body.get("image_data")
+    if not image_data:
+        return failure_response("Missing image")
+    asset = Asset(image_data = image_data)
+    db.session.add(asset)
+    db.session.commit()
+    return success_response(asset.serialize(), 201)
+
 # notifcation system (reach goal): given netid, retrieve posts and comments
-# @app.route("/posts/<int:a_id>/")
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
     # port = int(os.environ.get("PORT", 5000))

@@ -1,6 +1,5 @@
 import base64
 import boto3
-import datetime
 from flask_sqlalchemy import SQLAlchemy
 from io import BytesIO
 from mimetypes import guess_extension, guess_type
@@ -16,8 +15,8 @@ CATEGORIES = ["Studying", "Food", "Fitness", "Hotspots", "Dorms"]
 
 EXTENSIONS = ["png", "gif", "jpg", "jpeg"]
 BASE_DIR = os.getcwd()
-S3_BUCKET = "//"
-S3_BASE_URL =f'https://{S3_BUCKET}.s3-<REGION>.amazonaws.com'
+S3_BUCKET = "cornellconnect"
+S3_BASE_URL =f'https://{S3_BUCKET}.s3-us-east-2.amazonaws.com'
 
 class Asset(db.Model):
     __tablename__ = "asset"
@@ -45,6 +44,36 @@ class Asset(db.Model):
             salt = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for i in range(16))
 
             img_str = re.sub("^data:image/.+;base64,", "", image_data)
+            img_data = base64.b64decode(img_str)
+            img = Image.open(BytesIO(img_data))
+
+            self.base_url = S3_BASE_URL
+            self.salt = salt
+            self.extension = ext
+            self.height = img.height
+            self.width = img.width
+
+            img_filename = f'{salt}.{ext}'
+            self.upload(img, img_filename)
+        
+        except Exception as e:
+            print("Error:", e)
+        
+    def upload(self, img, img_filename):
+        try:
+            img_temploc = f'{BASE_DIR}/{img_filename}'
+            img.save(img_temploc)
+
+            s3_client = boto3.client('s3')
+            s3_client.upload_file(img_temploc, S3_BUCKET, img_filename)
+
+            s3_resource = boto3.resource('s3')
+            object_acl = s3_resource.ObjectAcl(S3_BUCKET, img_filename)
+            object_acl.put(ACL="public-read")
+            os.remove(img_temploc)
+
+        except Exception as e:
+            print("Upload Failed:", e)
 
 
 class Attraction(db.Model):
