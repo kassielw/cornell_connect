@@ -4,11 +4,11 @@
 
 ## Links
 
--   [other Git repo?](insertlinkhere.com)
+-   [Git Repo](https://github.com/kassielw/food_cloud)
 
 ## Description
 
-Reddit for Cornell students in association to different locations on campus
+Reddit-Like Platform where Cornell Students can post about their favorite attractions on campus anonymously. 
 
 ## Features
 

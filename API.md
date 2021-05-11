@@ -23,7 +23,6 @@
                     "id": 1,
                     "name": "Anonymous",
                     "picture": "N/A",
-                    "rating": 4,
                     "description": "so tall!",
                     "comments": [
                         {
@@ -65,7 +64,6 @@
                 "id": 1,
                 "name": "Anonymous",
                 "picture": "N/A",
-                "rating": 4,
                 "description": "so tall!",
                 "comments": [
                     {
@@ -152,7 +150,6 @@
             "id": 1,
             "name": "Anonymous",
             "picture": "N/A",
-            "rating": 4,
             "description": "so tall!",
             "comments": [
                 {
@@ -171,7 +168,6 @@
             "id": 3,
             "name": "Hannah",
             "picture": "N/A",
-            "rating": "N/A",
             "description": "look! it's pink for valentine's day",
             "comments": [
                 {
@@ -243,7 +239,6 @@
         "id": 7,
         "name": "Janice",
         "picture": "N/A",
-        "rating": 1,
         "description": "why is bingalee so loud",
         "comments": []
     }
@@ -264,7 +259,6 @@
             "id": 7,
             "name": "Janice",
             "picture": "N/A",
-            "rating": 1,
             "description": "why is bingalee so loud",
             "comments": [ COMMENTS ON POST... ]
         }

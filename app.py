@@ -122,7 +122,7 @@ def create_post(attraction_id):
     if not attraction:
         return failure_response("Attraction not found")
     new_post = Post(netid=body.get("netid"), name=body.get(
-          "name"), picture=body.get("picture"), rating=body.get("rating"), description=body.get("description"), attraction_id=attraction_id)
+          "name"), picture=body.get("picture"), description=body.get("description"), attraction_id=attraction_id)
     if not new_post.netid or not new_post.description:
         return failure_response("Missing required field")
     db.session.add(new_post)

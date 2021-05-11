@@ -105,7 +105,6 @@ class Post(db.Model):
     netid = db.Column(db.String, nullable=False)
     name = db.Column(db.String, nullable=True)
     picture = db.Column(db.String, nullable=True)
-    rating = db.Column(db.Integer,  nullable=True)
     description = db.Column(db.String, nullable=False)
     comments = db.relationship("Comment", cascade="delete")
     attraction_id = db.Column(db.Integer, db.ForeignKey("attraction.id"))
@@ -114,7 +113,6 @@ class Post(db.Model):
         self.netid = kwargs.get("netid")
         self.name = kwargs.get("name")
         self.picture = kwargs.get("picture")
-        self.rating = kwargs.get("rating")
         self.description = kwargs.get("description")
         self.attraction_id = kwargs.get("attraction_id")
 
@@ -123,7 +121,6 @@ class Post(db.Model):
             "id": self.id,
             "name": self.name if self.name else "Anonymous",
             "picture": self.picture if self.picture else "N/A",
-            "rating": self.rating if self.rating else "N/A",
             "description": self.description,
             "comments": [c.serialize() for c in self.comments]
         }
