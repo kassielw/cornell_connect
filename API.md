@@ -230,7 +230,6 @@
     "netid": "abc123",
     "name": "Janice",
     "picture": "",
-    "rating": 1,
     "description": "why is bingalee so loud"
     "attraction_id": 1
 }
