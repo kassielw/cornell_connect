@@ -5,10 +5,25 @@
 ## Links
 
 -   [Git Repo](https://github.com/kassielw/food_cloud)
+-   [HerokuApp](https://cornellconnect.herokuapp.com/)  (For the herokuapp to display use one of the routes specified in our API)
 
 ## Description
 
 Reddit-Like Platform where Cornell Students can post about their favorite attractions on campus anonymously. 
+
+With this app we have central attractions on campus, IE something like the clocktower. A student can make an anonymous (or identifiable) post about that attraction, for example a picture. The student can tag the picture with an appropriate tag that describes the picture ie photograph. And students can comment on the post.
+
+Our API detailing every route that was implemented by backend is documented in our API.
+
+## Database Schema
+
+We have a database table linking Attraction to Post (a one to many relationship) Each attraction can have many posts.
+
+We have a database table linking Post to Comment (a one to many relationship again) Each post can have many comments.
+
+These are the two main tables we employ in our design.
+
+In essence from a top down ideation we have each attraction having the possibility for many posts each having the possibility for many comments.
 
 ## Features
 
@@ -20,13 +35,13 @@ Insert screenshots of our app and other feature highlights here.
 
 ### iOS
 
--   requirement1
+-   INSERT IOS REQUIREMENTS/INFO HERE
 
 ### Backend
 
--   requirement1
+-   We have over 4 routes. Most are get and post, but there are a few delete ones.
 
-## Team
+## Team Members
 
 ### iOS
 
