@@ -200,7 +200,6 @@
             "id": 1,
             "name": "Anonymous",
             "picture": "N/A",
-            "rating": 4,
             "description": "so tall!",
             "comments": [
                 {
