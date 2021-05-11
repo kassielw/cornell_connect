@@ -346,3 +346,26 @@
 
 }
 ```
+
+## Uploading a picture
+
+`POST` `/upload/{id}/` <br />
+
+### Request
+
+```
+{
+    "image_data": <IMAGE INFO>
+}
+```
+
+### Success Response
+
+```
+{
+    "success": true,
+    "data": {
+        "url": <IMAGE URL>
+    }
+}
+```
