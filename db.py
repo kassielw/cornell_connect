@@ -81,14 +81,12 @@ class Attraction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
-    description = db.Column(db.String, nullable=False)
     posts = db.relationship("Post", cascade="delete")
     category = db.Column(db.String, nullable=False)
 
     def __init__(self, **kwargs):
         self.name = kwargs.get("name")
         self.address = kwargs.get("address")
-        self.description = kwargs.get("description")
         self.category = kwargs.get("category")
 
     def serialize(self):
@@ -96,7 +94,6 @@ class Attraction(db.Model):
             "id": self.id,
             "name": self.name,
             "address": self.address,
-            "description": self.description,
             "category": self.category,
             "posts": [p.serialize() for p in self.posts]
         }

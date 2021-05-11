@@ -56,12 +56,34 @@ def create_attraction():
     if category not in CATEGORIES:
         return failure_response("Category not found")
     new_attraction = Attraction(name=body.get("name"), address=body.get(
-          "address"), description=body.get("description"), category=body.get("category"))
-    if not new_attraction.name or not new_attraction.address or not new_attraction.description or not new_attraction.category:
+          "address"), category=body.get("category"))
+    if not new_attraction.name or not new_attraction.address or not new_attraction.category:
         return failure_response("Missing required field")
     db.session.add(new_attraction)
     db.session.commit()
     return success_response(new_attraction.serialize(), 201)
+
+
+@app.route("/attraction_list/", methods=["POST"])
+def create_mult_att():
+    body = json.loads(request.data)
+    atts = body.get("attractions")
+    if not atts:
+        return failure_response("Missing required field")
+    added = []
+    for a in atts:
+        category=a.get("category")
+        if category not in CATEGORIES:
+            return failure_response("Category not found")
+        new_attraction = Attraction(name=a.get("name"), address=a.get(
+            "address"), category=a.get("category"))
+        if not new_attraction.name or not new_attraction.address or not new_attraction.category:
+            return failure_response("Missing required field")
+        db.session.add(new_attraction)
+        db.session.commit()
+        added.append(new_attraction.serialize())
+    return success_response(added, 201)
+
 
 # delete attraction
 @app.route("/attractions/<int:attraction_id>/", methods=["DELETE"])
