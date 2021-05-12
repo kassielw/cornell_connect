@@ -129,6 +129,139 @@
 }
 ```
 
+## Get list of attractions <br />
+
+`GET` `/attraction_list/` <br />
+
+### Success Response
+
+```
+{
+    "attractions": [
+        {
+            "name": "RPCC",
+            "address": "107 Jessup Rd, Ithaca, NY 14850",
+            "category": "Food"
+        },
+        {
+            "name": "Louie's Lunch",
+            "address": "534 Thurston Ave, Ithaca, NY 14850",
+            "category": "Food"
+        },
+        {
+            "name": "Trillium Dining Hall",
+            "address": "215 Garden Ave, Ithaca, NY 14850",
+            "category": "Food"
+        },
+        {
+            "name": "The Terrace Restaurant",
+            "address": "130 Statler Dr, Ithaca, NY 14853",
+            "category": "Food"
+        },
+        {
+            "name": "Helen Newman Hall",
+            "address": "Cradit Farm Dr, Ithaca, NY 14850",
+            "category": "Fitness"
+        },
+        {
+            "name": "Noyes Fitness Center",
+            "address": "306 West Ave, Ithaca, NY 14850",
+            "category": "Fitness"
+        },
+        {
+            "name": "Teagle Down Fitness Center",
+            "address": "512 Campus Rd #1, Ithaca, NY 14853",
+            "category": "Fitness"
+        },
+        {
+            "name": "Beebe Lake Trail",
+            "address": "Beebe Lake Trail, Ithaca, NY 14850",
+            "category": "Fitness"
+        },
+        {
+            "name": "Cascadilla Gorge Trail",
+            "address": "Cascadilla Gorge Trail, Ithaca, NY 14850",
+            "category": "Fitness"
+        },
+        {
+            "name": "Plant Science Building",
+            "address": "Plant Science Building, Ithaca, NY 14850",
+            "category": "Studying"
+        },
+        {
+            "name": "Duffield Hall",
+            "address": "343 Campus Rd, Ithaca, NY 14853",
+            "category": "Studying"
+        },
+        {
+            "name": "Upson Hall",
+            "address": "124 Hoy Rd, Ithaca, NY 14850",
+            "category": "Studying"
+        },
+        {
+            "name": "Mann Library",
+            "address": "237 Mann Dr, Ithaca, NY 14850",
+            "category": "Studying"
+        },
+        {
+            "name": "Uris Library",
+            "address": "160 Ho Plaza, Ithaca, NY 14853",
+            "category": "Studying"
+        },
+        {
+            "name": "McGraw Tower",
+            "address": "Towers Rd, Ithaca, NY 14850",
+            "category": "Hotspots"
+        },
+        {
+            "name": "Cornell Botanic Gardens",
+            "address": "124 Comstock Knoll Dr, Ithaca, NY 14850",
+            "category": "Hotspots"
+        },
+        {
+            "name": "Ag Quad",
+            "address": "237 Mann Dr, Ithaca, NY 14853",
+            "category": "Hotspots"
+        },
+        {
+            "name": "Arts Quad",
+            "address": "Arts QuadIthaca, NY 14850",
+            "category": "Hotspots"
+        },
+        {
+            "name": "Mary Donlon Hall",
+            "address": "Mary Donlon Hall, Ithaca, NY 14850",
+            "category": "Hotspots"
+        },
+        {
+            "name": "Court-Kay-Bauer Hall",
+            "address": "148 Cradit Farm Dr, Ithaca, NY 14850",
+            "category": "Hotspots"
+        },
+        {
+            "name": "Clara Dickson Hall",
+            "address": "21 Northcross Rd, Ithaca, NY 14853",
+            "category": "Hotspots"
+        },
+        {
+            "name": "Libe Slope",
+            "address": "Libe Slope, Ithaca, NY 14850",
+            "category": "Hotspots"
+        },
+        {
+            "name": "Cascadilla Hall",
+            "address": "Cascadilla Hall, Ithaca, NY 14850",
+            "category": "Hotspots"
+        },
+        {
+            "name": "Alice Cook House",
+            "address": "709 University Ave, Ithaca, NY 14853",
+            "category": "Hotspots"
+        }
+    ]
+}
+```
+
 ## **Posts**
 
 ## Get all posts for a specific attraction
