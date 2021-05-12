@@ -56,8 +56,8 @@ def create_attraction():
     if category not in CATEGORIES:
         return failure_response("Category not found")
     new_attraction = Attraction(name=body.get("name"), address=body.get(
-          "address"), category=body.get("category"))
-    if not new_attraction.name or not new_attraction.address or not new_attraction.category:
+          "address"), category=body.get("category"), image=body.get("image"))
+    if not new_attraction.name or not new_attraction.address or not new_attraction.category or not new_attraction.image:
         return failure_response("Missing required field")
     db.session.add(new_attraction)
     db.session.commit()
@@ -76,8 +76,8 @@ def create_mult_att():
         if category not in CATEGORIES:
             return failure_response("Category not found")
         new_attraction = Attraction(name=a.get("name"), address=a.get(
-            "address"), category=a.get("category"))
-        if not new_attraction.name or not new_attraction.address or not new_attraction.category:
+            "address"), category=a.get("category"), image=a.get("image"))
+        if not new_attraction.name or not new_attraction.address or not new_attraction.category or not new_attraction.image:
             return failure_response("Missing required field")
         db.session.add(new_attraction)
         db.session.commit()

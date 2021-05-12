@@ -11,7 +11,7 @@ import string
 
 db = SQLAlchemy()
 
-CATEGORIES = ["Studying", "Food", "Fitness", "Hotspots", "Dorms"]
+CATEGORIES = ["Studying", "Food", "Fitness", "Hotspots", "Dorm"]
 
 EXTENSIONS = ["png", "gif", "jpg", "jpeg"]
 BASE_DIR = os.getcwd()
@@ -83,11 +83,13 @@ class Attraction(db.Model):
     address = db.Column(db.String, nullable=False)
     posts = db.relationship("Post", cascade="delete")
     category = db.Column(db.String, nullable=False)
+    image = db.Column(db.String, nullable=False)
 
     def __init__(self, **kwargs):
         self.name = kwargs.get("name")
         self.address = kwargs.get("address")
         self.category = kwargs.get("category")
+        self.image = kwargs.get("image")
 
     def serialize(self):
         return {
@@ -95,6 +97,7 @@ class Attraction(db.Model):
             "name": self.name,
             "address": self.address,
             "category": self.category,
+            "image": self.image,
             "posts": [p.serialize() for p in self.posts]
         }
 
