@@ -383,7 +383,6 @@
     "name": "Janice",
     "picture": "N/A",
     "description": "why is bingalee so loud"
-    "attraction_id": 1
 }
 ```
 
