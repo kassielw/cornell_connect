@@ -16,7 +16,6 @@
             "id": 1,
             "name": "Clock tower",
             "address": "123 Big Red Road, Ithaca, NY 14853",
-            "description": "Iconic clock tower, that once had a pumpkin on top",
             "category": "Hotspot",
             "posts": [
                 {
@@ -57,7 +56,6 @@
         "id": 1,
         "name": "Clock tower",
         "address": "123 Big Red Road, Ithaca, NY 14853",
-        "description": "Iconic clock tower, that once had a pumpkin on top",
         "category": "Hotspot",
         "posts": [
             {
@@ -93,7 +91,6 @@
 {
     "name": "Dairy Bar",
     "address": "100 Moo Moo Lane, Ithaca, NY 14853",
-    "description": "Offers the best ice cream on campus",
     "category": "Food"
 }
 ```
@@ -107,7 +104,6 @@
         "id": 2,
         "name": "Dairy Bar",
         "address": "100 Moo Moo Lane, Ithaca, NY 14853",
-        "description": "Offers the best ice cream on campus",
         "category": "Food",
         "posts": []
     }
@@ -127,7 +123,6 @@
         "id": 2,
         "name": "Dairy Bar",
         "address": "100 Moo Moo Lane, Ithaca, NY 14853",
-        "description": "Offers the best ice cream on campus",
         "category": "Food",
         "posts": [ POSTS... ]
     }
@@ -224,7 +219,7 @@
 {
     "netid": "abc123",
     "name": "Janice",
-    "picture": "",
+    "picture": "N/A",
     "description": "why is bingalee so loud"
     "attraction_id": 1
 }
