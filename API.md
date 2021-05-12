@@ -17,6 +17,7 @@
             "name": "Clock tower",
             "address": "123 Big Red Road, Ithaca, NY 14853",
             "category": "Hotspot",
+            "image": <IMAGE URL>,
             "posts": [
                 {
                     "id": 1,
@@ -56,7 +57,8 @@
         "id": 1,
         "name": "Clock tower",
         "address": "123 Big Red Road, Ithaca, NY 14853",
-        "category": "Hotspot",
+        "category": "Hotspots",
+        "image": <IMAGE URL>,
         "posts": [
             {
                 "id": 1,
@@ -91,7 +93,8 @@
 {
     "name": "Dairy Bar",
     "address": "100 Moo Moo Lane, Ithaca, NY 14853",
-    "category": "Food"
+    "category": "Food",
+    "image": <IMAGE URL>
 }
 ```
 
@@ -105,6 +108,7 @@
         "name": "Dairy Bar",
         "address": "100 Moo Moo Lane, Ithaca, NY 14853",
         "category": "Food",
+        "image": <IMAGE URL>,
         "posts": []
     }
 }
@@ -124,6 +128,7 @@
         "name": "Dairy Bar",
         "address": "100 Moo Moo Lane, Ithaca, NY 14853",
         "category": "Food",
+        "image": <IMAGE URL>,
         "posts": [ POSTS... ]
     }
 }

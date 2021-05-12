@@ -55,8 +55,8 @@
             "image": "https://cornellconnect.s3-us-east-2.amazonaws.com/V6OI0HUPHDEU65ZY.jpg"
         },
         {
-            "name": "Plant Science Building",
-            "address": "Plant Science Building, Ithaca, NY 14850",
+            "name": "Physical Science Building",
+            "address": "Physical Science Building, Ithaca, NY 14850",
             "category": "Studying",
             "image": "https://cornellconnect.s3-us-east-2.amazonaws.com/JE51COTSF7BEFTEG.jpg"
         },
@@ -104,7 +104,7 @@
         },
         {
             "name": "Arts Quad",
-            "address": "Arts QuadIthaca, NY 14850",
+            "address": "Arts Quad, Ithaca, NY 14850",
             "category": "Hotspots",
             "image": "https://cornellconnect.s3-us-east-2.amazonaws.com/TG2Y29RVWDWY0GGD.jpg"
         },
