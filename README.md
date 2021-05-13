@@ -35,7 +35,7 @@ Insert screenshots of our app and other feature highlights here.
 
 ### iOS
 
--   INSERT IOS REQUIREMENTS/INFO HERE
+-   We have several collection views and few PushViewControllers that are navigated to through buttons. Layout of the app is created by NSLayoutConstraints. We connected all the features to our backend's API and accessed the data they have stored to render it in the app.
 
 ### Backend
 
