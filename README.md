@@ -15,6 +15,9 @@ With this app we have central attractions on campus, IE something like the clock
 
 Our API detailing every route that was implemented by backend is documented in our API.
 
+
+NOTE: DUE TO TIME LIMITATIONS WE HAVE THE ROUTES PERTAINING TO COMMENTS IMPLEMENTED IN THE BACKEND PORTION OF OUR SUBMISSION BUT THE FRONTEND DID NOT HAVE TIME TO GET THIS FULLY FUNCTIONAL; IF WE HAD MORE TIME WE WOULD FINISH THIS IMPLEMENTATION.
+
 ## Database Schema
 
 We have a database table linking Attraction to Post (a one to many relationship) Each attraction can have many posts.

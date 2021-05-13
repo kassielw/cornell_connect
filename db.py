@@ -2,6 +2,7 @@ import base64
 import boto3
 from flask_sqlalchemy import SQLAlchemy
 from io import BytesIO
+import json
 from mimetypes import guess_extension, guess_type
 import os
 from PIL import Image
@@ -100,7 +101,17 @@ class Attraction(db.Model):
             "image": self.image,
             "posts": [p.serialize() for p in self.posts]
         }
-
+    
+    def initialize():
+        with open('./location.json') as f:
+            data = json.load(f)
+            for a in data['attractions']:
+                category=a.get("category")
+                new_attraction = Attraction(name=a.get("name"), address=a.get(
+                    "address"), category=a.get("category"), image=a.get("image"))
+                db.session.add(new_attraction)
+                db.session.commit()
+        return
 
 class Post(db.Model):
     __tablename__ = "post"
@@ -127,6 +138,18 @@ class Post(db.Model):
             "description": self.description,
             "comments": [c.serialize() for c in self.comments]
         }
+    
+    def initialize():
+        with open('./posts.json') as f:
+            data = json.load(f)
+            for p in data['posts']:
+                attraction_id = p.get("attraction_id")
+                attraction = Attraction.query.filter_by(id=attraction_id).first()
+                new_post = Post(netid=p.get("netid"), name=p.get(
+                    "name"), picture=p.get("picture"), description=p.get("description"), attraction_id=attraction_id)
+                db.session.add(new_post)
+                db.session.commit()
+        return
 
 
 class Comment(db.Model):

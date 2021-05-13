@@ -11,11 +11,13 @@ db_filename = "hack_challenge.db"
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///%s" % db_filename
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_ECHO"] = True
+app.config["SQLALCHEMY_ECHO"] = False
 
 db.init_app(app)
 with app.app_context():
     db.create_all()
+    Attraction.initialize()
+    Post.initialize()
 
 
 def success_response(data, code=200):
@@ -64,25 +66,25 @@ def create_attraction():
     return success_response(new_attraction.serialize(), 201)
 
 
-@app.route("/attraction_list/", methods=["POST"])
-def create_mult_att():
-    body = json.loads(request.data)
-    atts = body.get("attractions")
-    if not atts:
-        return failure_response("Missing required field")
-    added = []
-    for a in atts:
-        category=a.get("category")
-        if category not in CATEGORIES:
-            return failure_response("Category not found")
-        new_attraction = Attraction(name=a.get("name"), address=a.get(
-            "address"), category=a.get("category"), image=a.get("image"))
-        if not new_attraction.name or not new_attraction.address or not new_attraction.category or not new_attraction.image:
-            return failure_response("Missing required field")
-        db.session.add(new_attraction)
-        db.session.commit()
-        added.append(new_attraction.serialize())
-    return success_response(added, 201)
+# @app.route("/attraction_list/", methods=["POST"])
+# def create_mult_att():
+#     body = json.loads(request.data)
+#     atts = body.get("attractions")
+#     if not atts:
+#         return failure_response("Missing required field")
+#     added = []
+#     for a in atts:
+#         category=a.get("category")
+#         if category not in CATEGORIES:
+#             return failure_response("Category not found")
+#         new_attraction = Attraction(name=a.get("name"), address=a.get(
+#             "address"), category=a.get("category"), image=a.get("image"))
+#         if not new_attraction.name or not new_attraction.address or not new_attraction.category or not new_attraction.image:
+#             return failure_response("Missing required field")
+#         db.session.add(new_attraction)
+#         db.session.commit()
+#         added.append(new_attraction.serialize())
+#     return success_response(added, 201)
 
 
 # delete attraction
@@ -101,7 +103,7 @@ def get_posts(attraction_id):
     attraction = Attraction.query.filter_by(id=attraction_id).first()
     if not attraction:
         return failure_response("Attraction not found")
-    posts = Post.query.filter_by(id=attraction_id).all()
+    posts = Post.query.filter_by(attraction_id=attraction_id).all()
     if not posts:
         return failure_response("Posts not found")
     return success_response([p.serialize() for p in posts])
