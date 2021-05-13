@@ -32,9 +32,10 @@ In essence from a top down ideation we have each attraction having the possibili
 
 Insert screenshots of our app and other feature highlights here.
 
-![insert screenshot here](screenshot.jpg)
 https://imgur.com/jEC7IbV
+
 https://imgur.com/8e4of5f
+
 https://imgur.com/MCXPNYx
 
 
